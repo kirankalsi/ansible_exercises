@@ -1,4 +1,4 @@
-- hosts: all 
+- hosts: 127.0.0.1 
   become: true
   tasks:
   - name: 'install docker dependencies'
@@ -8,5 +8,31 @@
       - ca-certificates
       - curl
       - software-properties-common
-      update_cache: true
-      state: latest
+      - python3
+      - python3-pip
+
+  - name: 'add dcoker APT key'
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+
+  - name: 'add docker APT repo'
+    apt_repository:
+      repo: deb https://download.docker.com/linux/ubuntu bionic stable
+
+  - name: 'install docker'
+    apt:
+     name: docker-ce
+     state: latest
+     update_cache: true
+
+  - name: 'docker service start'
+    service:
+      name: docker
+      state: started
+
+  - name: 'install docker pip package'
+    pip:
+      name: docker
+      
+      
