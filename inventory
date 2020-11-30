@@ -1,0 +1,8 @@
+[vms]
+35.242.189.130
+34.89.59.226
+
+[vms:vars]
+ansible_user=kiran11kalsi
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+ansible_ssh_private_key_file=~/.ssh/ansible_id_rsa

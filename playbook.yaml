@@ -1,0 +1,12 @@
+- hosts: all 
+  become: true
+  tasks:
+  - name: 'install docker dependencies'
+    apt:
+      pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      update_cache: true
+      state: latest
