@@ -1,38 +1,11 @@
-- hosts: 127.0.0.1 
+- hosts: manager 
   become: true
-  tasks:
-  - name: 'install docker dependencies'
-    apt:
-      pkg:
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - software-properties-common
-      - python3
-      - python3-pip
+  roles:
+  - docker
+  - docker-manager
 
-  - name: 'add dcoker APT key'
-    apt_key:
-      url: https://download.docker.com/linux/ubuntu/gpg
-      state: present
-
-  - name: 'add docker APT repo'
-    apt_repository:
-      repo: deb https://download.docker.com/linux/ubuntu bionic stable
-
-  - name: 'install docker'
-    apt:
-     name: docker-ce
-     state: latest
-     update_cache: true
-
-  - name: 'docker service start'
-    service:
-      name: docker
-      state: started
-
-  - name: 'install docker pip package'
-    pip:
-      name: docker
-      
-      
+- hosts: workers
+  become: true
+  roles:
+  - docker
+  - docker-workers
